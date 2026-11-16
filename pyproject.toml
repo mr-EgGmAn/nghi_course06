@@ -7,7 +7,15 @@ authors = [
     { name = "Nguyen Hoang Dong Nghi", email = "hoang1.nguyen@edu.em-lyon.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "ipykernel>=7.4.0",
+    "matplotlib>=3.11.2",
+    "openpyxl>=3.1.5",
+    "pandas>=3.1.1",
+    "ruff>=0.17.5",
+    "scikit-learn>=1.9.1",
+    "streamlit>=1.67.0",
+]
 
 [project.scripts]
 nghi-course06 = "nghi_course06:main"
