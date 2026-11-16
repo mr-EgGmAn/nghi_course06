@@ -24,19 +24,19 @@ OUTPUT_DIR = DATA_DIR / "output_v3"
 
 
 def load_data(data_dir: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    """Load the two parts of the check-ups and the gender mapping table."""
-    part1 = pd.read_csv(data_dir / "diabetes_part1.csv")
-    part2 = pd.read_csv(data_dir / "diabetes_part2.csv")
-    gender_mapping = pd.read_csv(data_dir / "gender_mapping.csv")
-    return part1, part2, gender_mapping
+    """Load the two parts of the sales and the mapping table."""
+    part1 = pd.read_csv(data_dir / "Sales_MedicStore_part1.csv")
+    part2 = pd.read_csv(data_dir / "Sales_MedicStore_part2.csv")
+    mapping = pd.read_csv(data_dir / "Mapping.csv")
+    return part1, part2, mapping
 
 
 def consolidate(
-    part1: pd.DataFrame, part2: pd.DataFrame, gender_mapping: pd.DataFrame
+    part1: pd.DataFrame, part2: pd.DataFrame, mapping: pd.DataFrame
 ) -> pd.DataFrame:
     """Concatenate the two parts, then merge them with the gender mapping table."""
     patients = pd.concat([part1, part2], ignore_index=True)
-    df_final = patients.merge(gender_mapping, on="gender_code", how="left")
+    df_final = patients.merge(mapping, on="gender_code", how="left")
 
     assert len(df_final) == len(patients), "The merge changed the number of lines"
     assert df_final["gender"].notna().all(), (
@@ -190,8 +190,8 @@ def main() -> None:
     OUTPUT_DIR.mkdir(exist_ok=True)
 
     # Objective 1
-    part1, part2, gender_mapping = load_data(DATA_DIR)
-    df_final = consolidate(part1, part2, gender_mapping)
+    part1, part2, mapping = load_data(DATA_DIR)
+    df_final = consolidate(part1, part2, mapping)
     df_final.to_excel(OUTPUT_DIR / "diabetes_final.xlsx", index=False)
 
     # Objective 2
@@ -199,7 +199,7 @@ def main() -> None:
         {
             "diabetes_part1.csv": part1,
             "diabetes_part2.csv": part2,
-            "gender_mapping.csv": gender_mapping,
+            "mapping.csv": mapping,
             "final dataset": df_final,
         }
     )
@@ -208,7 +208,7 @@ def main() -> None:
     dict_analysis = {
         "How many lines are in diabetes_part1.csv": len(part1),
         "How many lines are in diabetes_part2.csv": len(part2),
-        "How many lines are in gender_mapping.csv": len(gender_mapping),
+        "How many lines are in mapping.csv": len(mapping),
         "How many lines are exact duplicates": df_final.duplicated().sum(),
         **answer_business_questions(df_final),
     }
