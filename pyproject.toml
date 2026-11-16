@@ -1,0 +1,17 @@
+[project]
+name = "nghi-course06"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Nguyen Hoang Dong Nghi", email = "hoang1.nguyen@edu.em-lyon.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+nghi-course06 = "nghi_course06:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
