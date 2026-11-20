@@ -12,9 +12,7 @@ Run it from the project root:
 
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import pandas as pd
-from openpyxl.drawing.image import Image
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 OUTPUT_DIR = DATA_DIR / "output_v3"
@@ -48,11 +46,11 @@ def consolidate(
 # --- Objective 2: questions ----------------------------------------------------
 
 
-def compute_shapes(datasets: dict[str, pd.DataFrame]) -> pd.DataFrame:
+def compute_shapes(df: dict[str, pd.DataFrame]) -> pd.DataFrame:
     """Technical Q1: number of lines and columns of each dataset."""
     return pd.DataFrame(
         {
-            "dataset": list(datasets),
+            "dataset": df.head(5),
             "nb_lines": [df.shape[0] for df in datasets.values()],
             "nb_columns": [df.shape[1] for df in datasets.values()],
         }
